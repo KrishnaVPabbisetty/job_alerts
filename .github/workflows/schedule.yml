@@ -25,7 +25,7 @@ jobs:
           env:
             SMTP_PORT: "587" # Example port
             SMTP_SERVER: "smtp.example.com"
-            EMAIL: "your-email@example.com"
+            EMAIL: "jobalert995@gmail.com"
             EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           run: echo "Environment variables set"
   
