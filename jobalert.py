@@ -37,8 +37,9 @@ def send_email(subject, message):
         print("Sending email...")
         msg = MIMEMultipart()
         msg['From'] = sender_email
-        msg['To'] = ", ".join(receiver_emails)
+        msg['To'] = "Undisclosed Recipients"  # Placeholder for the To field
         msg['Subject'] = subject
+        msg['Bcc'] = ", ".join(receiver_emails)  # Use Bcc for all recipients
         msg.attach(MIMEText(message, 'html'))
 
         # Connect to the Gmail SMTP server
@@ -140,7 +141,7 @@ def notify_jobs_by_email():
             </style>
         </head>
         <body>
-        <h2>New Job Listings Updated Within Last Hour</h2>
+        <h2>Amazon Latest Job's</h2>
         <ul class="job-list">
         """
 
@@ -162,7 +163,7 @@ def notify_jobs_by_email():
         </html>
         """
 
-        send_email("New Job Listings Updated Within Last Hour", message)
+        send_email("Amazon Latest Job's", message)
     else:
         print("No jobs updated within the last hour.")
 
