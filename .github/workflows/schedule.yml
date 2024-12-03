@@ -3,7 +3,7 @@ name: Run Job Notifications Script
 on:
   workflow_dispatch:  # Allows manual trigger
   schedule:
-    - cron: "0 */2 * * *"  # Runs every 2 hours
+    - cron: "0 */2 * * *"  # Runs every 3 hours
 
 jobs:
   run-script:
@@ -21,7 +21,11 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
   
-      - name: Load .env file and run script
-        run: |
-          export $(cat .env | xargs)  # Load .env variables into the environment
-          python jobalert.py
+      - name: Run job alert script
+        env:
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          SMTP_SERVER: ${{ secrets.SMTP_SERVER }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          RECEIVER_EMAILS: ${{ secrets.RECEIVER_EMAILS }}
+        run: python jobalert.py
