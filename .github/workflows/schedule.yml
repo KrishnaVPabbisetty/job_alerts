@@ -1,32 +1,28 @@
 name: Run Job Notifications Script
 
 on:
+  workflow_dispatch:  # Allows manual trigger
   schedule:
-    # Schedule to run every 2 hours
-    - cron: "0 */2 * * *"
+    - cron: "0 */2 * * *"  # Runs every 2 hours
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Check out the repository code
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"  # Specify the Python version
+          python-version: "3.9"
 
-      # Step 3: Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # Step 4: Run the script
       - name: Run script
         run: |
           python jobalert.py
