@@ -87,7 +87,7 @@ def scrape_amazon_jobs_selenium():
                 try:
                     title_element = job_card.find_element(By.CLASS_NAME, 'job-title')
                     title = title_element.text
-                    link = title_element.find_element(By.TAG_NAME, 'a').get_dom_attribute('href')
+                    link = title_element.find_element(By.TAG_NAME, 'a').get_attribute('href')
 
                     location_element = job_card.find_element(By.CLASS_NAME, 'location-and-id')
                     location = location_element.find_elements(By.TAG_NAME, 'li')[0].text
@@ -102,7 +102,7 @@ def scrape_amazon_jobs_selenium():
                     # Check if the job was updated within the last hour
                     time_elapsed_element = job_card.find_element(By.CLASS_NAME, 'meta.time-elapsed')
                     time_elapsed = time_elapsed_element.text.lower()  # Example: "updated about 1 hour ago"
-                    if "1 hour" in time_elapsed:
+                    if " 1 hour" in time_elapsed:
                         jobs.append({
                             'title': title,
                             'location': location,
