@@ -1,9 +1,9 @@
 name: Run Job Notifications Script
 
 on:
-  workflow_dispatch:  # Allows manual trigger
+  workflow_dispatch: # To allow manual triggers
   schedule:
-    - cron: "0 */2 * * *"  # Runs every 3 hours
+    - cron: "0 */2 * * *"  # Runs every 2 hours
 
 jobs:
   run-script:

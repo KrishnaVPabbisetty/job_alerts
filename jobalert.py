@@ -13,10 +13,10 @@ import os
 from dotenv import load_dotenv
 import time
 
-# Load environment variables from .env file
+# Loading the environment variables from .env file
 load_dotenv()
 
-# Email details from environment variables
+# Email details
 sender_email = os.getenv("SENDER_EMAIL")
 password = os.getenv("EMAIL_PASSWORD")
 smtp_server = os.getenv("SMTP_SERVER")
@@ -33,16 +33,15 @@ def parse_posting_date(posting_date):
 # Function to send email notifications
 def send_email(subject, message):
     try:
-        # Create the email message
         print("Sending email...")
         msg = MIMEMultipart()
         msg['From'] = sender_email
-        msg['To'] = "Undisclosed Recipients"  # Placeholder for the To field
+        msg['To'] = "Undisclosed Recipients"
         msg['Subject'] = subject
-        msg['Bcc'] = ", ".join(receiver_emails)  # Use Bcc for all recipients
+        msg['Bcc'] = ", ".join(receiver_emails)
         msg.attach(MIMEText(message, 'html'))
 
-        # Connect to the Gmail SMTP server
+        # To connect to the Gmail SMTP server
         with smtplib.SMTP(smtp_server, smtp_port) as server:
             server.starttls()
             server.login(sender_email, password)
@@ -53,14 +52,11 @@ def send_email(subject, message):
 
 # Function to scrape multiple URLs and check the time-elapsed condition
 def scrape_amazon_jobs_selenium():
-    # URLs for different roles
     urls = [
         "https://www.amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&distanceType=Mi&radius=24km&latitude=38.89037&longitude=-77.03196&loc_group_id=&loc_query=USA&base_query=data%20engineer&city=&country=USA&region=&county=&query_options=&",
         "https://www.amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&distanceType=Mi&radius=24km&latitude=38.89037&longitude=-77.03196&loc_group_id=&loc_query=USA&base_query=data%20analyst&city=&country=USA&region=&county=&query_options=&",
         "https://www.amazon.jobs/en/search?offset=0&result_limit=10&sort=recent&distanceType=Mi&radius=24km&latitude=&longitude=&loc_group_id=&loc_query=USA&base_query=software&city=&country=USA&region=&county=&query_options=&"
     ]
-    
-    # Set up Selenium with ChromeDriver
     chrome_options = Options()
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-gpu')
@@ -75,8 +71,6 @@ def scrape_amazon_jobs_selenium():
         try:
             print(f"Opening URL: {url}")
             driver.get(url)
-
-            # Wait for jobs to load
             WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.CLASS_NAME, 'job-tile'))
             )
@@ -93,7 +87,7 @@ def scrape_amazon_jobs_selenium():
                     location_element = job_card.find_element(By.CLASS_NAME, 'location-and-id')
                     location = location_element.find_elements(By.TAG_NAME, 'li')[0].text
 
-                    # Extract job ID from the URL
+                    # Extract job ID
                     job_id = link.split('/')[-2]
 
                     # Extract job posting date
@@ -123,9 +117,7 @@ def scrape_amazon_jobs_selenium():
 # Notification function to handle filtered jobs
 def notify_jobs_by_email():
     jobs = scrape_amazon_jobs_selenium()
-
     if jobs:
-        # Format the email content
         message = """
         <html>
         <head>
@@ -167,6 +159,5 @@ def notify_jobs_by_email():
     else:
         print("No jobs updated within the last hour.")
 
-# Run the updated notification function
 if __name__ == "__main__":
     notify_jobs_by_email()

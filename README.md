@@ -31,8 +31,8 @@ The **Job Alert Notification System** is an automated script designed to scrape 
 
 #### 1. **Clone the Repository**
 ```bash
-git clone https://github.com/your-username/job-alert-notifications.git
-cd job-alert-notifications
+git clone https://github.com/syam888/job_notifications.git
+cd job_notifications
 ```
 
 #### 2. **Install Required Packages**
@@ -85,8 +85,8 @@ python jobalert.py
 ---
 
 ### **Contributors**
-- **[Your Name]**  
-  [Your Email or GitHub Profile](https://github.com/your-username)
+- **[Gana Syam Reddy Mandepudi]**  
+  [GitHub Profile](https://github.com/syam888)
 
 Feel free to open issues or contribute enhancements to the repository!
 
