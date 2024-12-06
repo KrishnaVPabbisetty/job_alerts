@@ -97,7 +97,7 @@ def scrape_amazon_jobs_selenium():
                     # Check if the job was updated within the last hour
                     time_elapsed_element = job_card.find_element(By.CLASS_NAME, 'meta.time-elapsed')
                     time_elapsed = time_elapsed_element.text.lower()  # Example: "updated about 1 hour ago"
-                    if " 1 hour" in time_elapsed:
+                    if " 1 hour" in time_elapsed or "minutes ago" in time_elapsed:
                         jobs.append({
                             'title': title,
                             'location': location,
