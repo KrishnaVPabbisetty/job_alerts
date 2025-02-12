@@ -1,6 +1,9 @@
 name: Run Job Notifications Script
 
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch: # To allow manual triggers
   schedule:
     - cron: "0 * * * *" # Runs every hour
